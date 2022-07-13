@@ -84,7 +84,7 @@ public class StatementController {
 	// Filter based on accountNo and Amount Range     //NOT WORKING
 	@PostMapping("/admin/getAccountSummaryByDateRange")
 	public List<StatementResponse> getAccountSummaryByDateRange(
-			@RequestParam(name = "accountId") Optional<String> accountId,
+			@RequestParam(name = "accountId") Optional<Integer> accountId,
 			@RequestParam(name = "fromDate") Optional<String> fromDate,
 			@RequestParam(name = "toDate") Optional<String> toDate) 
 	{
