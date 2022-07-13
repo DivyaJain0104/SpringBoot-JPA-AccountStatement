@@ -27,20 +27,13 @@ public interface StatementDetailRepository extends JpaRepository<Statement, Inte
 
 	  
 	//Admin statement by date range 
-	
 	  @Query("SELECT new com.springboot.statementResponse.StatementResponse(s.id ,s.accountId,a.accountType,a.accountNumber,s.dateField,s.amount) "
-	  +
-	  "FROM Statement s JOIN s.account a WHERE a.id = :accountId AND s.dateField BETWEEN :fromDate AND :toDate"
+	  + "FROM Statement s JOIN s.account a WHERE a.id = :accountId "
+	  + "AND TO_DATE(s.dateField, 'DD.MM.YYYY') >= TO_DATE(:fromDate, 'DD/MM/YYYY') AND\n"
+	  + "TO_DATE(s.dateField, 'DD.MM.YYYY') <= TO_DATE(:toDate, 'DD/MM/YYYY')"
 	  )
 	   
-	/*
-	 * @Query("SELECT new com.springboot.statementResponse.StatementResponse(s.id ,s.accountId,a.accountType,a.accountNumber,s.dateField,s.amount) "
-	 * +
-	 * "FROM Statement s JOIN s.account a WHERE a.id = :accountId AND CAST(s.dateField AS DATE) >= :fromDate AND CAST(s.dateField AS DATE) < :toDate"
-	 * ) // cast (datediff (day, 0, yourdate) as datetime) = '2012-12-12' CAST(date
-	 * AS DATE) >= '20191001' AND CAST(date AS DATE) < '20191101'
-	 */
-	  public List<StatementResponse> getAdminStatementByDate(@Param("accountId") Optional<String> accountId,
+	  public List<StatementResponse> getAdminStatementByDate(@Param("accountId") Optional<Integer> accountId,
 				@Param("fromDate") Optional<String> fromDate,@Param("toDate")Optional<String> toDate);
 	  
 }
